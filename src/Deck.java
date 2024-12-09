@@ -32,6 +32,11 @@ public class Deck
         return tempStack;
     }
 
+    public Card deal()
+    {
+        return this.deck.pop();
+    }
+
     public String toString()
     {
         StringBuilder deckString = new StringBuilder();
