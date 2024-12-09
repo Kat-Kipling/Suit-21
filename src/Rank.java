@@ -1,36 +1,35 @@
 public enum Rank
 {
-    TWO(1),
-    THREE(2),
-    FOUR(3),
-    FIVE(4),
-    SIX(5),
-    SEVEN(6),
-    EIGHT(7),
-    NINE(8),
-    TEN(9),
+    TWO(2),
+    THREE(3),
+    FOUR(4),
+    FIVE(5),
+    SIX(6),
+    SEVEN(7),
+    EIGHT(8),
+    NINE(9),
+    TEN(10),
     JACK(10),
-    QUEEN(11),
-    KING(12),
-    ACE(13);
+    QUEEN(10),
+    KING(10),
+    ACE(1, 11);
 
     private final int value;
+    private final int alt_value;
 
     Rank(int value)
     {
         this.value = value;
+        alt_value = value;
+    }
+
+    Rank(int value, int alt_value)
+    {
+        this.value = value;
+        this.alt_value = value;
     }
 
     public int getValue() {
         return value;
-    }
-
-    public static Rank fromValue(int value) {
-        for (Rank rank : Rank.values()) {
-            if (rank.getValue() == value) {
-                return rank;
-            }
-        }
-        throw new IllegalArgumentException("Invalid value: " + value);
     }
 }
