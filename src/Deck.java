@@ -4,11 +4,13 @@ import java.util.Stack;
 
 public class Deck
 {
-    public Stack<Card> deck = new Stack<>();
+    private Stack<Card> deck = new Stack<>();
+    private int cardCount;
 
     public Deck()
     {
         this.deck = newShuffledDeck();
+        this.cardCount = this.deck.size();
     }
 
     private Stack<Card> newShuffledDeck()
@@ -34,6 +36,7 @@ public class Deck
 
     public Card deal()
     {
+        this.cardCount = this.deck.size();
         return this.deck.pop();
     }
 
@@ -45,5 +48,9 @@ public class Deck
             deckString.append(card).append("\n");
         }
         return deckString.toString();
+    }
+
+    public int getCardCount() {
+        return cardCount;
     }
 }
