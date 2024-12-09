@@ -15,13 +15,4 @@ public enum Suit
     public int getValue() {
         return value;
     }
-
-    public static Suit fromValue(int value) {
-        for (Suit suit : Suit.values()) {
-            if (suit.getValue() == value) {
-                return suit;
-            }
-        }
-        throw new IllegalArgumentException("Invalid value: " + value);
-    }
 }
