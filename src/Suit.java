@@ -1,7 +1,18 @@
 public enum Suit
 {
-    CLUBS(),
-    DIAMONDS(),
-    HEARTS(),
-    SPADES();
+    CLUBS(1),
+    DIAMONDS(2),
+    HEARTS(3),
+    SPADES(4);
+
+    private final int value;
+
+    Suit(int value)
+    {
+        this.value = value;
+    }
+
+    public int getValue() {
+        return value;
+    }
 }

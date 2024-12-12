@@ -12,17 +12,24 @@ public enum Rank
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(1);
+    ACE(1, 11);
 
-    private int score;
+    private final int value;
+    private final int alt_value;
 
-    Rank(int score)
+    Rank(int value)
     {
-        this.score = score;
+        this.value = value;
+        alt_value = value;
     }
 
-    public void setScore(int score)
+    Rank(int value, int alt_value)
     {
-        this.score = score;
+        this.value = value;
+        this.alt_value = value;
+    }
+
+    public int getValue() {
+        return value;
     }
 }
