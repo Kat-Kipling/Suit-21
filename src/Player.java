@@ -11,10 +11,16 @@ public class Player
     {
         this.name = name;
         this.playerNumber = playOrder;
+        this.hand = new Hand();
     }
 
     public void addCard(Card card)
     {
         this.hand.add(card);
+    }
+
+    public String getHand()
+    {
+        return this.hand.toString();
     }
 }
