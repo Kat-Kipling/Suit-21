@@ -29,8 +29,6 @@ public class Game
             players[i] = new Player(tempName,  i+1);
         }
 
-        System.out.println(deck);
-
         while(deck.getCardCount() > (5 * numberOfPlayers))
         {
             // Main game logic loop
@@ -58,6 +56,8 @@ public class Game
                     System.out.println(cardToSwap.toString() + " swapped with " + newCard.toString());
                 }
                 displayHand(player.getHand());
+                System.out.println("Press enter to turn round over...");
+                input.nextLine();
             }
 
             // Clear hand for next round
