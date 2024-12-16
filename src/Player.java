@@ -19,6 +19,11 @@ public class Player
         this.hand.add(card);
     }
 
+    public void clearHand()
+    {
+        this.hand.clear();
+    }
+
     public String getHand()
     {
         return this.hand.toString();
