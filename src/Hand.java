@@ -46,7 +46,39 @@ public class Hand implements HandInterface {
 
     @Override
     public int scoreSuit(Suit suitToScore) {
-        return 0;
+        int suitScore = 0;
+        for(Card card : this.hand)
+        {
+            if (card.getSuit().equals(suitToScore))
+            {
+                suitScore+=card.getRank().getValue();
+            }
+
+        }
+
+        if (suitScore > 21)
+        {
+            for(Card card : this.hand)
+            {
+                if (card.getSuit().equals(suitToScore))
+                {
+                    suitScore+=card.getRank().getAlt_value();
+                }
+            }
+        }
+
+        return suitScore;
+    }
+
+    @Override
+    public int[] scoreHand()
+    {
+        int[] scores = new int[4];
+        scores[0] = scoreSuit(Suit.CLUBS);
+        scores[1] = scoreSuit(Suit.DIAMONDS);
+        scores[2] = scoreSuit(Suit.HEARTS);
+        scores[3] = scoreSuit(Suit.SPADES);
+        return scores;
     }
 
     @Override

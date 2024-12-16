@@ -9,4 +9,6 @@ public interface HandInterface
     public void clear();
 
     public int scoreSuit(Suit suitToScore);
+
+    public int[] scoreHand();
 }
