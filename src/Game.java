@@ -32,12 +32,27 @@ public class Game
 
         while(deck.getCardCount() > (5 * numberOfPlayers))
         {
+            // Main game logic loop
             for(Player player : players)
             {
+                // Logic for dealing player hand
                 for(int i = 0; i < 5; i++)
                 {
                     player.addCard(deck.deal());
                 }
+            }
+
+            // Display each player's name and hand
+            for(Player player : players)
+            {
+                System.out.println(player.getName() + "'s hand");
+                System.out.println(player.getHand());
+            }
+
+            // Clear hand for next round
+            for(Player player : players)
+            {
+                player.clearHand();
             }
         }
     }
