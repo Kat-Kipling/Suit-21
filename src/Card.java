@@ -13,4 +13,9 @@ public class Card
     public String toString() {
         return rank + " of " + suit;
     }
+
+    public boolean equals(Card cardToCompare)
+    {
+        return cardToCompare.toString().equals(this.toString());
+    }
 }
