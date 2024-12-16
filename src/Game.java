@@ -42,11 +42,20 @@ public class Game
                 }
             }
 
-            // Display each player's name and hand
+            // Display each player's name, hand and total score for each suit.
             for(Player player : players)
             {
+                int[] tempScore = player.scoreHand();
                 System.out.println(player.getName() + "'s hand");
                 System.out.println(player.getHand());
+                System.out.println("Clubs");
+                System.out.println(tempScore[0]);
+                System.out.println("Diamonds");
+                System.out.println(tempScore[1]);
+                System.out.println("Hearts");
+                System.out.println(tempScore[2]);
+                System.out.println("Spades");
+                System.out.println(tempScore[3]);
             }
 
             // Clear hand for next round
