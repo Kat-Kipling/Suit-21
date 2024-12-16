@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Game
@@ -42,11 +43,19 @@ public class Game
                 }
             }
 
-            // Display each player's name and hand
+            // General gameplay logic per player
             for(Player player : players)
             {
                 System.out.println(player.getName() + "'s hand");
-                System.out.println(player.getHand());
+
+                displayHand(player.getHand());
+                Card cardToSwap = player.getCard(input.nextInt() - 1); // -1 to allow for 0 based indexing
+                Card newCard = deck.deal();
+                input.nextLine(); // Clear buffer
+                if(player.exchange(cardToSwap, newCard))
+                {
+                    System.out.println(cardToSwap.toString() + " swapped with " + newCard.toString());
+                }
             }
 
             // Clear hand for next round
@@ -55,5 +64,15 @@ public class Game
                 player.clearHand();
             }
         }
+    }
+
+    public static void displayHand(Hand hand)
+    {
+        System.out.println("Your Hand:");
+        for(int i = 0; i < hand.getCurrentSize(); i++)
+        {
+            System.out.printf("%d. %s%n", i + 1, hand.get(i));
+        }
+        System.out.print("Choose a card to swap (1 - " + hand.getCurrentSize() + "): ");
     }
 }

@@ -11,4 +11,6 @@ public interface HandInterface
     public int scoreSuit(Suit suitToScore);
 
     public Card get(int index);
+
+    public Card get(Card card);
 }
