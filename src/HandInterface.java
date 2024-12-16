@@ -1,3 +1,5 @@
+import java.util.EnumMap;
+
 public interface HandInterface
 {
     public int getCurrentSize();
@@ -9,4 +11,6 @@ public interface HandInterface
     public void clear();
 
     public int scoreSuit(Suit suitToScore);
+
+    public EnumMap<Suit, Integer> scoreHand();
 }

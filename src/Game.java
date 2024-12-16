@@ -1,3 +1,4 @@
+import java.util.EnumMap;
 import java.util.Scanner;
 
 public class Game
@@ -42,11 +43,16 @@ public class Game
                 }
             }
 
-            // Display each player's name and hand
+            // Display each player's name, hand and total score for each suit.
             for(Player player : players)
             {
+                EnumMap<Suit, Integer> scores = player.scoreHand();
                 System.out.println(player.getName() + "'s hand");
                 System.out.println(player.getHand());
+
+                for (Suit suit : Suit.values()) {
+                    System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
+                }
             }
 
             // Clear hand for next round
