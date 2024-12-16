@@ -32,11 +32,8 @@ public class Game
 
         while(deck.getCardCount() > (5 * numberOfPlayers))
         {
-            System.out.println("Game is being played...");
-            System.out.println("Dealing cards...");
             for(Player player : players)
             {
-                System.out.println("Dealing....");
                 for(int i = 0; i < 5; i++)
                 {
                     player.addCard(deck.deal());
