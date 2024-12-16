@@ -1,6 +1,7 @@
 import java.util.ArrayList;
 
 public class Hand implements HandInterface {
+
     private ArrayList<Card> hand;
     private int cardCount;
 
@@ -16,12 +17,14 @@ public class Hand implements HandInterface {
 
     @Override
     public int getCurrentSize() {
-        return 0;
+        return cardCount;
     }
 
     @Override
     public Card add(Card newCard) {
-        if (this.hand.add(newCard)) {
+        if (this.hand.add(newCard))
+        {
+            this.cardCount++;
             return newCard;
         } else return null;
     }
@@ -42,11 +45,17 @@ public class Hand implements HandInterface {
     public void clear()
     {
         this.hand.clear();
+        this.cardCount = 0;
     }
 
     @Override
     public int scoreSuit(Suit suitToScore) {
         return 0;
+    }
+
+    @Override
+    public Card get(int index) {
+        return this.hand.get(index);
     }
 
     @Override
@@ -60,4 +69,6 @@ public class Hand implements HandInterface {
         }
         return cards.toString();
     }
+
+
 }
