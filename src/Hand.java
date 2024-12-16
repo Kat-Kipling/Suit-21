@@ -39,8 +39,9 @@ public class Hand implements HandInterface {
     }
 
     @Override
-    public void clear() {
-
+    public void clear()
+    {
+        this.hand.clear();
     }
 
     @Override
