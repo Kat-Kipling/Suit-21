@@ -49,6 +49,7 @@ public class Game
                 System.out.println(player.getName() + "'s hand");
 
                 displayHand(player.getHand());
+                System.out.print("Choose a card to swap (1 - 5): ");
                 Card cardToSwap = player.getCard(input.nextInt() - 1); // -1 to allow for 0 based indexing
                 Card newCard = deck.deal();
                 input.nextLine(); // Clear buffer
@@ -56,6 +57,7 @@ public class Game
                 {
                     System.out.println(cardToSwap.toString() + " swapped with " + newCard.toString());
                 }
+                displayHand(player.getHand());
             }
 
             // Clear hand for next round
@@ -73,6 +75,5 @@ public class Game
         {
             System.out.printf("%d. %s%n", i + 1, hand.get(i));
         }
-        System.out.print("Choose a card to swap (1 - " + hand.getCurrentSize() + "): ");
     }
 }
