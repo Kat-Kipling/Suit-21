@@ -59,6 +59,11 @@ public class Hand implements HandInterface {
     }
 
     @Override
+    public Card get(Card card) {
+        return null;
+    }
+
+    @Override
     public String toString()
     {
         StringBuilder cards = new StringBuilder();
