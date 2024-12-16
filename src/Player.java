@@ -24,9 +24,9 @@ public class Player
         this.hand.clear();
     }
 
-    public String getHand()
+    public Hand getHand()
     {
-        return this.hand.toString();
+        return this.hand;
     }
 
     public String getName() {
