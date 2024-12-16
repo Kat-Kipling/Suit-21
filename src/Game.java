@@ -48,7 +48,7 @@ public class Game
                 EnumMap<Suit, Integer> scores = player.scoreHand();
                 System.out.println(player.getName() + "'s hand");
 
-                displayHand(player.getHand());
+                displayHand(player.getHand(), scores);
                 System.out.print("Choose a card to swap (1 - 5): ");
                 Card cardToSwap = player.getCard(input.nextInt() - 1); // -1 to allow for 0 based indexing
                 Card newCard = deck.deal();
@@ -57,7 +57,8 @@ public class Game
                 {
                     System.out.println(cardToSwap.toString() + " swapped with " + newCard.toString());
                 }
-                displayHand(player.getHand());
+                scores = player.scoreHand();
+                displayHand(player.getHand(), scores);
                 System.out.println("Press enter to turn round over...");
                 input.nextLine();
 
@@ -71,16 +72,16 @@ public class Game
         }
     }
 
-    public static void displayHand(Hand hand)
+    public static void displayHand(Hand hand, EnumMap<Suit, Integer> scores)
     {
         System.out.println("Your Hand:");
         for(int i = 0; i < hand.getCurrentSize(); i++)
         {
             System.out.printf("%d. %s%n", i + 1, hand.get(i));
         }
-        for (Suit suit : Suit.values()) 
+        for (Suit suit : Suit.values())
         {
-          System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
+            System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
         }
     }
 }
