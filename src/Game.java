@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EnumMap;
 import java.util.Scanner;
 
 public class Game
@@ -44,6 +45,7 @@ public class Game
             // General gameplay logic per player
             for(Player player : players)
             {
+                EnumMap<Suit, Integer> scores = player.scoreHand();
                 System.out.println(player.getName() + "'s hand");
 
                 displayHand(player.getHand());
@@ -58,6 +60,7 @@ public class Game
                 displayHand(player.getHand());
                 System.out.println("Press enter to turn round over...");
                 input.nextLine();
+
             }
 
             // Clear hand for next round
@@ -74,6 +77,10 @@ public class Game
         for(int i = 0; i < hand.getCurrentSize(); i++)
         {
             System.out.printf("%d. %s%n", i + 1, hand.get(i));
+        }
+        for (Suit suit : Suit.values()) 
+        {
+          System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
         }
     }
 }

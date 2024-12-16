@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 public class Hand implements HandInterface {
 
@@ -49,8 +50,46 @@ public class Hand implements HandInterface {
     }
 
     @Override
-    public int scoreSuit(Suit suitToScore) {
-        return 0;
+    public int scoreSuit(Suit suitToScore)
+    {
+        int suitScore = 0;
+
+        // Calculate the score for the given suit
+        for (Card card : this.hand)
+        {
+            if (card.getSuit() == suitToScore)
+            {
+                suitScore += card.getRank().getValue();
+            }
+        }
+
+        // Adjust score for aces if it exceeds 21
+        if (suitScore > 21)
+        {
+            suitScore = 0;
+            for (Card card : this.hand)
+            {
+                if (card.getSuit() == suitToScore)
+                {
+                    suitScore += card.getRank().getAlt_value();
+                }
+            }
+        }
+
+        return suitScore;
+    }
+
+    @Override
+    public EnumMap<Suit, Integer> scoreHand()
+    {
+        EnumMap<Suit, Integer> scores = new EnumMap<>(Suit.class);
+
+        for (Suit suit : Suit.values())
+        {
+            scores.put(suit, scoreSuit(suit));
+        }
+
+        return scores;
     }
 
     @Override
