@@ -12,6 +12,7 @@ public class Game
         {
             System.out.println("How many players (2 - 6)?");
             numberOfPlayers = input.nextInt();
+            input.nextLine(); // Clear input buffer
             if(numberOfPlayers < 2 || numberOfPlayers > 6)
             {
                 System.out.println("Invalid amount of players!");
@@ -19,6 +20,13 @@ public class Game
         }
 
         Player[] players = new Player[numberOfPlayers];
+
+        for(int i = 0; i < numberOfPlayers; i++)
+        {
+            System.out.printf("Player %d Name: ", i+1);
+            String tempName = input.nextLine();
+            players[i] = new Player(tempName,  i+1);
+        }
 
         System.out.println(deck);
 
@@ -34,8 +42,6 @@ public class Game
                     player.addCard(deck.deal());
                 }
             }
-            System.out.println("Deck count:");
-            System.out.println(deck.getCardCount());
         }
     }
 }
