@@ -1,3 +1,5 @@
+import java.util.EnumMap;
+
 public class Player {
     private String name;
     private int playerNumber;
@@ -31,7 +33,7 @@ public class Player {
         return this.hand.scoreSuit(suitToScore);
     }
 
-    public int[] scoreHand()
+    public EnumMap<Suit, Integer> scoreHand()
     {
         return this.hand.scoreHand();
     }

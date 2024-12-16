@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.EnumMap;
 
 public class Hand implements HandInterface {
     private ArrayList<Card> hand;
@@ -45,25 +46,28 @@ public class Hand implements HandInterface {
     }
 
     @Override
-    public int scoreSuit(Suit suitToScore) {
+    public int scoreSuit(Suit suitToScore)
+    {
         int suitScore = 0;
-        for(Card card : this.hand)
-        {
-            if (card.getSuit().equals(suitToScore))
-            {
-                suitScore+=card.getRank().getValue();
-            }
 
+        // Calculate the score for the given suit
+        for (Card card : this.hand)
+        {
+            if (card.getSuit() == suitToScore)
+            {
+                suitScore += card.getRank().getValue();
+            }
         }
 
-        if (suitScore > 21) // If score goes over 21, any aces are more beneficial as 1's rather than 11's
+        // Adjust score for aces if it exceeds 21
+        if (suitScore > 21)
         {
             suitScore = 0;
-            for(Card card : this.hand)
+            for (Card card : this.hand)
             {
-                if (card.getSuit().equals(suitToScore))
+                if (card.getSuit() == suitToScore)
                 {
-                    suitScore+=card.getRank().getAlt_value();
+                    suitScore += card.getRank().getAlt_value();
                 }
             }
         }
@@ -72,13 +76,15 @@ public class Hand implements HandInterface {
     }
 
     @Override
-    public int[] scoreHand()
+    public EnumMap<Suit, Integer> scoreHand()
     {
-        int[] scores = new int[4];
-        scores[0] = scoreSuit(Suit.CLUBS);
-        scores[1] = scoreSuit(Suit.DIAMONDS);
-        scores[2] = scoreSuit(Suit.HEARTS);
-        scores[3] = scoreSuit(Suit.SPADES);
+        EnumMap<Suit, Integer> scores = new EnumMap<>(Suit.class);
+
+        for (Suit suit : Suit.values())
+        {
+            scores.put(suit, scoreSuit(suit));
+        }
+
         return scores;
     }
 
