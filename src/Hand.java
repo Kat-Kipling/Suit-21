@@ -1,17 +1,27 @@
+import java.util.ArrayList;
+
 public class Hand implements HandInterface
 {
-    private Card[] hand;
+    private ArrayList<Card> hand;
     private int cardCount;
-    private static final int DEFAULT_CAPACITY = 5;
 
     public Hand()
     {
-        this(Hand.DEFAULT_CAPACITY);
+        this.cardCount = 0;
     }
 
-    public Hand(int capacity)
+    public Hand(ArrayList<Card> cards)
     {
-        this.hand = new Card[capacity];
         this.cardCount = 0;
+        this.hand = cards;
+    }
+
+    public Card add(Card newCard)
+    {
+        if(this.hand.add(newCard))
+        {
+            return newCard;
+        }
+        else return null;
     }
 }
