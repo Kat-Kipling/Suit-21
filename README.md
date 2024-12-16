@@ -43,15 +43,11 @@ Suit 21 is a console-based card game where players compete to achieve a score of
      java Suit21
      ```
 
-(Adjust the instructions above based on the language of your implementation.)
-
 ## Repository Structure
 - `src/`: Contains the source code for the game
 - `docs/`: Documentation and assignment requirements
 - `tests/`: Unit tests for validating game logic
 
-## Contribution
-Contributions are welcome! If you have suggestions or improvements, feel free to open an issue or submit a pull request.
 
 ## License
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
