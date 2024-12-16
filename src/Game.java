@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.Scanner;
 
@@ -29,8 +30,6 @@ public class Game
             players[i] = new Player(tempName,  i+1);
         }
 
-        System.out.println(deck);
-
         while(deck.getCardCount() > (5 * numberOfPlayers))
         {
             // Main game logic loop
@@ -43,16 +42,25 @@ public class Game
                 }
             }
 
-            // Display each player's name, hand and total score for each suit.
+            // General gameplay logic per player
             for(Player player : players)
             {
                 EnumMap<Suit, Integer> scores = player.scoreHand();
                 System.out.println(player.getName() + "'s hand");
-                System.out.println(player.getHand());
 
-                for (Suit suit : Suit.values()) {
-                    System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
+                displayHand(player.getHand());
+                System.out.print("Choose a card to swap (1 - 5): ");
+                Card cardToSwap = player.getCard(input.nextInt() - 1); // -1 to allow for 0 based indexing
+                Card newCard = deck.deal();
+                input.nextLine(); // Clear buffer
+                if(player.exchange(cardToSwap, newCard))
+                {
+                    System.out.println(cardToSwap.toString() + " swapped with " + newCard.toString());
                 }
+                displayHand(player.getHand());
+                System.out.println("Press enter to turn round over...");
+                input.nextLine();
+
             }
 
             // Clear hand for next round
@@ -60,6 +68,19 @@ public class Game
             {
                 player.clearHand();
             }
+        }
+    }
+
+    public static void displayHand(Hand hand)
+    {
+        System.out.println("Your Hand:");
+        for(int i = 0; i < hand.getCurrentSize(); i++)
+        {
+            System.out.printf("%d. %s%n", i + 1, hand.get(i));
+        }
+        for (Suit suit : Suit.values()) 
+        {
+          System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
         }
     }
 }

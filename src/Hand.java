@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.EnumMap;
 
 public class Hand implements HandInterface {
+
     private ArrayList<Card> hand;
     private int cardCount;
 
@@ -17,12 +18,14 @@ public class Hand implements HandInterface {
 
     @Override
     public int getCurrentSize() {
-        return 0;
+        return cardCount;
     }
 
     @Override
     public Card add(Card newCard) {
-        if (this.hand.add(newCard)) {
+        if (this.hand.add(newCard))
+        {
+            this.cardCount++;
             return newCard;
         } else return null;
     }
@@ -43,6 +46,7 @@ public class Hand implements HandInterface {
     public void clear()
     {
         this.hand.clear();
+        this.cardCount = 0;
     }
 
     @Override
@@ -89,6 +93,16 @@ public class Hand implements HandInterface {
     }
 
     @Override
+    public Card get(int index) {
+        return this.hand.get(index);
+    }
+
+    @Override
+    public Card get(Card card) {
+        return null;
+    }
+
+    @Override
     public String toString()
     {
         StringBuilder cards = new StringBuilder();
@@ -99,4 +113,6 @@ public class Hand implements HandInterface {
         }
         return cards.toString();
     }
+
+
 }

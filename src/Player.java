@@ -16,12 +16,29 @@ public class Player {
         this.hand.add(card);
     }
 
-    public void clearHand() {
+    public boolean exchange(Card cardToExchange, Card newCard)
+    {
+        return this.hand.exchange(cardToExchange, newCard);
+    }
+
+    public Card getCard(int index)
+    {
+        return this.hand.get(index);
+    }
+
+    public Card getCard(Card card)
+    {
+        return null;
+    }
+
+    public void clearHand()
+    {
         this.hand.clear();
     }
 
-    public String getHand() {
-        return this.hand.toString();
+    public Hand getHand()
+    {
+        return this.hand;
     }
 
     public String getName() {
