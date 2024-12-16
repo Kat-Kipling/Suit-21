@@ -28,6 +28,9 @@ Suit 21 is a console-based card game where players compete to achieve a score of
 - Turn-based gameplay for multiple players
 - Victory condition handling
 
+## Development Status
+The project is being developed in multiple levels of functionality, ranging from Level 1 (basic game mechanics) to Level 9 (advanced features for higher grade levels). The main branch (`master`) currently reflects **Level 1 functionality**, which includes the basic rules and mechanics of the game. Additional features will be implemented and tested in separate branches before being merged into `master`.
+
 ## How to Run
 1. Clone this repository:
    ```bash
