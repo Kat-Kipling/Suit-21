@@ -56,8 +56,9 @@ public class Hand implements HandInterface {
 
         }
 
-        if (suitScore > 21)
+        if (suitScore > 21) // If score goes over 21, any aces are more beneficial as 1's rather than 11's
         {
+            suitScore = 0;
             for(Card card : this.hand)
             {
                 if (card.getSuit().equals(suitToScore))
