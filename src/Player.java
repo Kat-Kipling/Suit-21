@@ -28,4 +28,8 @@ public class Player
     {
         return this.hand.toString();
     }
+
+    public String getName() {
+        return name;
+    }
 }
