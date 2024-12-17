@@ -1,4 +1,4 @@
-import java.util.Dictionary;
+import java.util.EnumMap;
 
 public interface HandInterface
 {
@@ -6,9 +6,15 @@ public interface HandInterface
 
     public Card add(Card newCard);
 
-    public Card exchange(Card oldCard, Card newCard);
+    public boolean exchange(Card oldCard, Card newCard);
 
     public void clear();
 
     public int scoreSuit(Suit suitToScore);
+  
+    public EnumMap<Suit, Integer> scoreHand();
+  
+    public Card get(int index);
+
+    public Card get(Card card);
 }

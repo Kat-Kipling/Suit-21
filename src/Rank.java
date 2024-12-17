@@ -32,4 +32,8 @@ public enum Rank
     public int getValue() {
         return value;
     }
+
+    public int getAlt_value() {
+        return alt_value;
+    }
 }
