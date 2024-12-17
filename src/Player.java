@@ -5,12 +5,19 @@ public class Player {
     private int playerNumber;
     private Hand hand;
     private EnumMap<Suit, Integer> suitScores;
+    private DisplayStrategy displayStrategy;
 
 
-    public Player(String name, int playOrder) {
+    public Player(String name, int playOrder, DisplayStrategy displayStrategy, Deck deck) {
         this.name = name;
         this.playerNumber = playOrder;
         this.hand = new Hand();
+        this.displayStrategy = displayStrategy;
+
+        for (int i = 0; i < 5; i++) {
+            this.addCard(deck.deal());
+        }
+
         this.suitScores = scoreHand();
     }
 
@@ -74,5 +81,10 @@ public class Player {
             }
         }
         return false; // If no suit has scored 21, return false
+    }
+
+    public void displayHand()
+    {
+        displayStrategy.displayHand(this);
     }
 }
