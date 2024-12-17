@@ -2,27 +2,29 @@ import java.util.EnumMap;
 
 public class Player {
     private String name;
-    private int playerNumber;
+    private double score;
     private Hand hand;
     private EnumMap<Suit, Integer> suitScores;
     private DisplayStrategy displayStrategy;
 
 
-    public Player(String name, int playOrder, DisplayStrategy displayStrategy, Deck deck) {
+    public Player(String name, DisplayStrategy displayStrategy) {
         this.name = name;
-        this.playerNumber = playOrder;
         this.hand = new Hand();
         this.displayStrategy = displayStrategy;
-
-        for (int i = 0; i < 5; i++) {
-            this.addCard(deck.deal());
-        }
-
         this.suitScores = scoreHand();
     }
 
     public void addCard(Card card) {
         this.hand.add(card);
+    }
+
+    public void initializeHand(Deck deck)
+    {
+        for (int i = 0; i < 5; i++)
+        {
+            this.hand.add(deck.deal());
+        }
     }
 
     public boolean exchange(Card cardToExchange, Card newCard)
@@ -86,5 +88,10 @@ public class Player {
     public void displayHand()
     {
         displayStrategy.displayHand(this);
+    }
+
+    public void addPoints(double points)
+    {
+        this.score += points;
     }
 }

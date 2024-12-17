@@ -1,17 +1,34 @@
 import java.util.Scanner;
 
-public class GameLauncher {
+public class GameLauncher
+{
 
     public static void main(String[] args)
     {
         Scanner input = new Scanner(System.in);
+        ConsoleDisplayStrategy consoleDisplay = new ConsoleDisplayStrategy();
 
         // Prompt user for number of players
         int numberOfPlayers = getNumberOfPlayers(input);
 
-        // Initialize and start the game
-        Game game = new Game(1, numberOfPlayers); // Assuming 1 point per round
-        game.startGame();  // Start the game
+        // Initialize players
+        Player[] players = new Player[numberOfPlayers];
+        for (int i = 0; i < players.length; i++)
+        {
+            System.out.printf("Player %d Name: ", i + 1);
+            String name = input.nextLine();
+            players[i] = new Player(name, consoleDisplay);
+        }
+
+        // Prompt for the number of games to play
+        System.out.print("Enter number of games to play: ");
+        int numberOfGames = input.nextInt();
+        input.nextLine();  // Clear the input buffer
+
+
+        // Create a GameManager to handle multiple games
+        GameManager gameManager = new GameManager(numberOfGames, numberOfPlayers, players);
+        gameManager.launchGames(); // Start all games and track scores
     }
 
     // Helper method to get a valid number of players
