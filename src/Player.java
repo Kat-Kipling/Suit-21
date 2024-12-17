@@ -61,4 +61,18 @@ public class Player {
     {
         return this.hand.scoreHand();
     }
+
+    public EnumMap<Suit, Integer> getSuitScores() {
+        return suitScores;
+    }
+
+    public boolean hasScored21()
+    {
+        for (EnumMap.Entry<Suit, Integer> entry : suitScores.entrySet()) {
+            if (entry.getValue() == 21) {
+                return true; // If score 21 is found for any suit, return true
+            }
+        }
+        return false; // If no suit has scored 21, return false
+    }
 }
