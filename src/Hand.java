@@ -4,30 +4,26 @@ import java.util.EnumMap;
 public class Hand implements HandInterface {
 
     private ArrayList<Card> hand;
-    private int cardCount;
 
     public Hand() {
-        this.cardCount = 0;
         this.hand = new ArrayList<Card>();
     }
 
     public Hand(ArrayList<Card> cards) {
-        this.cardCount = 0;
         this.hand = cards;
     }
 
     @Override
     public int getCurrentSize() {
-        return cardCount;
+        return this.hand.size();
     }
 
     @Override
-    public Card add(Card newCard) {
+    public boolean add(Card newCard) {
         if (this.hand.add(newCard))
         {
-            this.cardCount++;
-            return newCard;
-        } else return null;
+            return true;
+        } else return false;
     }
 
     @Override
@@ -46,34 +42,29 @@ public class Hand implements HandInterface {
     public void clear()
     {
         this.hand.clear();
-        this.cardCount = 0;
     }
 
     @Override
     public int scoreSuit(Suit suitToScore)
     {
         int suitScore = 0;
+        int aceCount = 0;
 
-        // Calculate the score for the given suit
-        for (Card card : this.hand)
-        {
-            if (card.getSuit() == suitToScore)
-            {
-                suitScore += card.getRank().getValue();
+        // Calculate the score for the given suit and count aces
+        for (Card card : this.hand) {
+            if (card.getSuit() == suitToScore) {
+                int cardValue = card.getRank().getValue();
+                suitScore += cardValue;
+                if (cardValue == 1) {
+                    aceCount++;
+                }
             }
         }
 
         // Adjust score for aces if it exceeds 21
-        if (suitScore > 21)
-        {
-            suitScore = 0;
-            for (Card card : this.hand)
-            {
-                if (card.getSuit() == suitToScore)
-                {
-                    suitScore += card.getRank().getAlt_value();
-                }
-            }
+        while (suitScore > 21 && aceCount > 0) {
+            suitScore -= 10;  // Ace value adjusted to 11
+            aceCount--;
         }
 
         return suitScore;
@@ -113,6 +104,4 @@ public class Hand implements HandInterface {
         }
         return cards.toString();
     }
-
-
 }

@@ -4,7 +4,7 @@ public interface HandInterface
 {
     public int getCurrentSize();
 
-    public Card add(Card newCard);
+    public boolean add(Card newCard);
 
     public boolean exchange(Card oldCard, Card newCard);
 
