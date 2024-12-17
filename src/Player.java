@@ -4,12 +4,14 @@ public class Player {
     private String name;
     private int playerNumber;
     private Hand hand;
+    private EnumMap<Suit, Integer> suitScores;
 
 
     public Player(String name, int playOrder) {
         this.name = name;
         this.playerNumber = playOrder;
         this.hand = new Hand();
+        this.suitScores = scoreHand();
     }
 
     public void addCard(Card card) {
@@ -18,7 +20,12 @@ public class Player {
 
     public boolean exchange(Card cardToExchange, Card newCard)
     {
-        return this.hand.exchange(cardToExchange, newCard);
+        if (this.hand.exchange(cardToExchange, newCard))
+        {
+            this.suitScores = scoreHand();
+            return true;
+        }
+        else return false;
     }
 
     public Card getCard(int index)
