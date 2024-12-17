@@ -1,87 +1,55 @@
-import java.util.ArrayList;
-import java.util.EnumMap;
 import java.util.Scanner;
+import java.util.EnumMap;
 
 public class Game
 {
-    public static void main(String[] args)
+    private Player[] players;
+    private Deck deck;
+    private int pointPerRound;
+
+    public Game(int pointPerRound, int numberOfPlayers)
     {
-        Deck deck = new Deck();
-        int numberOfPlayers = -1;
-        Scanner input = new Scanner(System.in);
-
-        while(numberOfPlayers < 2 || numberOfPlayers > 6)
-        {
-            System.out.println("How many players (2 - 6)?");
-            numberOfPlayers = input.nextInt();
-            input.nextLine(); // Clear input buffer
-            if(numberOfPlayers < 2 || numberOfPlayers > 6)
-            {
-                System.out.println("Invalid amount of players!");
-            }
-        }
-
-        Player[] players = new Player[numberOfPlayers];
-
-        for(int i = 0; i < numberOfPlayers; i++)
-        {
-            System.out.printf("Player %d Name: ", i+1);
-            String tempName = input.nextLine();
-            players[i] = new Player(tempName,  i+1);
-        }
-
-        while(deck.getCardCount() > (5 * numberOfPlayers))
-        {
-            // Main game logic loop
-            for(Player player : players)
-            {
-                // Logic for dealing player hand
-                for(int i = 0; i < 5; i++)
-                {
-                    player.addCard(deck.deal());
-                }
-            }
-
-            // General gameplay logic per player
-            for(Player player : players)
-            {
-                EnumMap<Suit, Integer> scores = player.scoreHand();
-                System.out.println(player.getName() + "'s hand");
-
-                displayHand(player.getHand(), scores);
-                System.out.print("Choose a card to swap (1 - 5): ");
-                Card cardToSwap = player.getCard(input.nextInt() - 1); // -1 to allow for 0 based indexing
-                Card newCard = deck.deal();
-                input.nextLine(); // Clear buffer
-                if(player.exchange(cardToSwap, newCard))
-                {
-                    System.out.println(cardToSwap.toString() + " swapped with " + newCard.toString());
-                }
-                scores = player.scoreHand();
-                displayHand(player.getHand(), scores);
-                System.out.println("Press enter to turn round over...");
-                input.nextLine();
-
-            }
-
-            // Clear hand for next round
-            for(Player player : players)
-            {
-                player.clearHand();
-            }
-        }
+        this.pointPerRound = pointPerRound;
+        this.deck = new Deck();
+        this.players = new Player[numberOfPlayers];
     }
 
-    public static void displayHand(Hand hand, EnumMap<Suit, Integer> scores)
+    public void startGame()
     {
-        System.out.println("Your Hand:");
-        for(int i = 0; i < hand.getCurrentSize(); i++)
+        Scanner input = new Scanner(System.in);
+        boolean gameWon = false;
+        DisplayStrategy consoleDisplay = new ConsoleDisplayStrategy();
+
+        // Setup players
+        for (int i = 0; i < players.length; i++)
         {
-            System.out.printf("%d. %s%n", i + 1, hand.get(i));
+            System.out.printf("Player %d Name: ", i + 1);
+            String name = input.nextLine();
+            players[i] = new Player(name, i + 1, consoleDisplay, this.deck);
         }
-        for (Suit suit : Suit.values())
+
+        // Main game loop
+        while (deck.getCardCount() > players.length && !gameWon)
         {
-            System.out.printf("%-8s: %d%n", suit, scores.getOrDefault(suit, 0));
+            Round round = new Round(deck, players);
+            round.playRound(input); // Start a round
+
+            // Check if the round has a winner
+            if (round.isRoundWon())
+            {
+                gameWon = true;  // If any player wins, the game is won
+            }
+        }
+
+        // After the game ends, you can calculate the score or do any other game-end logic
+        if (gameWon)
+        {
+            System.out.println("Game over! There is a winner.");
+
+        }
+        else
+        {
+            System.out.println("Nobody scored 21 before deck ran out. Game over.");
         }
     }
 }
