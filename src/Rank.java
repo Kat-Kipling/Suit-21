@@ -12,28 +12,16 @@ public enum Rank
     JACK(10),
     QUEEN(10),
     KING(10),
-    ACE(1, 11);
+    ACE(11);
 
     private final int value;
-    private final int alt_value;
 
     Rank(int value)
     {
         this.value = value;
-        alt_value = value;
-    }
-
-    Rank(int value, int alt_value)
-    {
-        this.value = value;
-        this.alt_value = value;
     }
 
     public int getValue() {
         return value;
-    }
-
-    public int getAlt_value() {
-        return alt_value;
     }
 }
