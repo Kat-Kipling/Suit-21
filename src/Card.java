@@ -1,3 +1,5 @@
+import java.util.Objects;
+
 public class Card
 {
     public Suit getSuit() {
@@ -25,5 +27,10 @@ public class Card
     public boolean equals(Card cardToCompare)
     {
         return cardToCompare.toString().equals(this.toString());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(suit, rank);
     }
 }
