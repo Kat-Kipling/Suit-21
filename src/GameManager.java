@@ -14,6 +14,7 @@ public class GameManager
         this.players = players;
         this.playerTotalScores = new HashMap<>();
         this.scoreCalculator = new ScoreCalculator();
+        this.consoleDisplay = new ConsoleDisplayStrategy();
     }
 
     public void launchGames()
