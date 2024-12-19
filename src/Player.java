@@ -1,11 +1,12 @@
 import java.util.EnumMap;
 
 public class Player {
-    private String name;
+    private final String name;
     private double score;
     private Hand hand;
     private EnumMap<Suit, Integer> suitScores;
-    private DisplayStrategy displayStrategy;
+    private final DisplayStrategy displayStrategy;
+    private final ScoreCalculator scoreCalculator;
 
 
     public Player(String name, DisplayStrategy displayStrategy) {
@@ -13,6 +14,7 @@ public class Player {
         this.hand = new Hand();
         this.displayStrategy = displayStrategy;
         this.suitScores = scoreHand();
+        this.scoreCalculator = new ScoreCalculator();
     }
 
     public void addCard(Card card) {
@@ -25,6 +27,7 @@ public class Player {
         {
             this.hand.add(deck.deal());
         }
+        this.suitScores = scoreHand();
     }
 
     public boolean exchange(Card cardToExchange, Card newCard)
@@ -63,26 +66,16 @@ public class Player {
 
     public int scoreSuit(Suit suitToScore)
     {
-        return this.hand.scoreSuit(suitToScore);
+        return this.scoreCalculator.scoreSuit(suitToScore, this.hand);
     }
 
     public EnumMap<Suit, Integer> scoreHand()
     {
-        return this.hand.scoreHand();
+        return this.scoreCalculator.scoreHand(this.hand);
     }
 
     public EnumMap<Suit, Integer> getSuitScores() {
         return suitScores;
-    }
-
-    public boolean hasScored21()
-    {
-        for (EnumMap.Entry<Suit, Integer> entry : suitScores.entrySet()) {
-            if (entry.getValue() == 21) {
-                return true; // If score 21 is found for any suit, return true
-            }
-        }
-        return false; // If no suit has scored 21, return false
     }
 
     public void displayHand()
@@ -93,5 +86,15 @@ public class Player {
     public void addPoints(double points)
     {
         this.score += points;
+    }
+
+    public void updateScores()
+    {
+        this.suitScores = scoreCalculator.scoreHand(hand);
+    }
+
+    public boolean hasScored21()
+    {
+        return scoreCalculator.hasScored21(suitScores);
     }
 }
