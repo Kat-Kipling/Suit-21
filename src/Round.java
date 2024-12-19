@@ -1,13 +1,15 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
  * Class to handle individual rounds of the game. To be used with another class
- * to handle the overall gameflow (e.g. amount of rounds)
+ * to handle the overall gameflow.
  */
 public class Round
 {
     private Deck deck;
     private Player[] players;
+    private ArrayList<Player> winningPlayers = new ArrayList<>();
     private boolean roundWon;
 
     public Round(Deck deck, Player[] players)
@@ -38,7 +40,8 @@ public class Round
 
             if (player.hasScored21())
             {
-                System.out.println("21!!! YOU WIN. GAME WILL FINISH AFTER THIS ROUND.");
+                System.out.println("21! You will win after this round.");
+                winningPlayers.add(player);
                 roundWon = true;
             }
 
@@ -50,5 +53,10 @@ public class Round
     public boolean isRoundWon()
     {
         return roundWon;
+    }
+
+    public ArrayList<Player> getWinningPlayers()
+    {
+        return this.winningPlayers;
     }
 }

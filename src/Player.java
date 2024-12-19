@@ -1,29 +1,30 @@
 import java.util.EnumMap;
 
 public class Player {
-    private String name;
-    private int playerNumber;
+    private final String name;
+    private double score;
     private Hand hand;
     private EnumMap<Suit, Integer> suitScores;
-    private DisplayStrategy displayStrategy;
+    private final DisplayStrategy displayStrategy;
+    private final ScoreCalculator scoreCalculator;
 
-
-    public Player(String name, int playOrder, DisplayStrategy displayStrategy, Deck deck) {
+    public Player(String name, DisplayStrategy displayStrategy) {
         this.name = name;
-        this.playerNumber = playOrder;
         this.hand = new Hand();
         this.displayStrategy = displayStrategy;
+        this.scoreCalculator = new ScoreCalculator();
+    }
 
-        for (int i = 0; i < 5; i++) {
-            this.addCard(deck.deal());
-        }
-
-        this.suitScores = scoreHand();
+    public void setHand(Hand hand)
+    {
+        this.hand = hand;
+        this.suitScores = scoreCalculator.scoreHand(this.hand);
     }
 
     public void addCard(Card card) {
         this.hand.add(card);
     }
+
 
     public boolean exchange(Card cardToExchange, Card newCard)
     {
@@ -61,30 +62,35 @@ public class Player {
 
     public int scoreSuit(Suit suitToScore)
     {
-        return this.hand.scoreSuit(suitToScore);
+        return this.scoreCalculator.scoreSuit(suitToScore, this.hand);
     }
 
     public EnumMap<Suit, Integer> scoreHand()
     {
-        return this.hand.scoreHand();
+        return this.scoreCalculator.scoreHand(this.hand);
     }
 
     public EnumMap<Suit, Integer> getSuitScores() {
         return suitScores;
     }
 
-    public boolean hasScored21()
-    {
-        for (EnumMap.Entry<Suit, Integer> entry : suitScores.entrySet()) {
-            if (entry.getValue() == 21) {
-                return true; // If score 21 is found for any suit, return true
-            }
-        }
-        return false; // If no suit has scored 21, return false
-    }
-
     public void displayHand()
     {
         displayStrategy.displayHand(this);
+    }
+
+    public void addPoints(double points)
+    {
+        this.score += points;
+    }
+
+    public void updateScores()
+    {
+        this.suitScores = scoreCalculator.scoreHand(hand);
+    }
+
+    public boolean hasScored21()
+    {
+        return scoreCalculator.hasScored21(suitScores);
     }
 }

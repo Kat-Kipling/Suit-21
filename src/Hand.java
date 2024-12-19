@@ -45,45 +45,6 @@ public class Hand implements HandInterface {
     }
 
     @Override
-    public int scoreSuit(Suit suitToScore)
-    {
-        int suitScore = 0;
-        int aceCount = 0;
-
-        // Calculate the score for the given suit and count aces
-        for (Card card : this.hand) {
-            if (card.getSuit() == suitToScore) {
-                int cardValue = card.getRank().getValue();
-                suitScore += cardValue;
-                if (cardValue == 1) {
-                    aceCount++;
-                }
-            }
-        }
-
-        // Adjust score for aces if it exceeds 21
-        while (suitScore > 21 && aceCount > 0) {
-            suitScore -= 10;  // Ace value adjusted to 11
-            aceCount--;
-        }
-
-        return suitScore;
-    }
-
-    @Override
-    public EnumMap<Suit, Integer> scoreHand()
-    {
-        EnumMap<Suit, Integer> scores = new EnumMap<>(Suit.class);
-
-        for (Suit suit : Suit.values())
-        {
-            scores.put(suit, scoreSuit(suit));
-        }
-
-        return scores;
-    }
-
-    @Override
     public Card get(int index) {
         return this.hand.get(index);
     }

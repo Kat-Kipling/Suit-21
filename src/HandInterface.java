@@ -9,10 +9,6 @@ public interface HandInterface
     public boolean exchange(Card oldCard, Card newCard);
 
     public void clear();
-
-    public int scoreSuit(Suit suitToScore);
-  
-    public EnumMap<Suit, Integer> scoreHand();
   
     public Card get(int index);
 

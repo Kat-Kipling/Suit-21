@@ -1,55 +1,58 @@
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
-import java.util.EnumMap;
 
 public class Game
 {
     private Player[] players;
     private Deck deck;
+    private Round round;
     private int pointPerRound;
+    private Scanner input = new Scanner(System.in);
+    private ScoreCalculator scoreCalculator;
 
-    public Game(int pointPerRound, int numberOfPlayers)
+
+    public Game(int pointPerRound, Player[] players)
     {
         this.pointPerRound = pointPerRound;
         this.deck = new Deck();
-        this.players = new Player[numberOfPlayers];
+        this.players = players;
+        this.scoreCalculator = new ScoreCalculator();
     }
 
     public void startGame()
     {
-        Scanner input = new Scanner(System.in);
+        dealHands();
+
+        round = new Round(deck, players);
+
+        // Game loop
         boolean gameWon = false;
-        DisplayStrategy consoleDisplay = new ConsoleDisplayStrategy();
-
-        // Setup players
-        for (int i = 0; i < players.length; i++)
+        while (!gameWon && deck.getCardCount() >= players.length)
         {
-            System.out.printf("Player %d Name: ", i + 1);
-            String name = input.nextLine();
-            players[i] = new Player(name, i + 1, consoleDisplay, this.deck);
-        }
+            round.playRound(input);  // Play a round
 
-        // Main game loop
-        while (deck.getCardCount() > players.length && !gameWon)
-        {
-            Round round = new Round(deck, players);
-            round.playRound(input); // Start a round
-
-            // Check if the round has a winner
             if (round.isRoundWon())
             {
-                gameWon = true;  // If any player wins, the game is won
+                gameWon = true;
             }
         }
+    }
 
-        // After the game ends, you can calculate the score or do any other game-end logic
-        if (gameWon)
+    private void dealHands() {
+        for (Player player : players)
         {
-            System.out.println("Game over! There is a winner.");
+            Hand hand = new Hand();
+            for (int i = 0; i < 5; i++)
+            {
+                hand.add(deck.deal()); // Deal 5 cards to each player's hand
+            }
+            player.setHand(hand); // Assign the hand to the player
+        }
+    }
 
-        }
-        else
-        {
-            System.out.println("Nobody scored 21 before deck ran out. Game over.");
-        }
+    public HashMap<Player, Double> calculateScores()
+    {
+        return scoreCalculator.calculateScores(round.getWinningPlayers(), players, pointPerRound);
     }
 }
