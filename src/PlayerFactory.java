@@ -2,7 +2,8 @@ import java.util.Scanner;
 
 public class PlayerFactory
 {
-    private Scanner input;
+    private final Scanner input;
+    private int computerCount = 0;
 
     public PlayerFactory(Scanner input)
     {
@@ -22,6 +23,13 @@ public class PlayerFactory
             PlayerStrategy playerStrategy = name.equalsIgnoreCase("Computer")
                     ? new ComputerStrategy()  // Assign AI strategy
                     : new HumanStrategy(input); // Assign human strategy
+
+            if (name.equalsIgnoreCase("Computer"))
+            {
+                // Increment counter for computer players and append the number
+                computerCount++;
+                name = "Computer " + computerCount;
+            }
 
             players[i] = new Player(name, consoleDisplay, playerStrategy);
         }
