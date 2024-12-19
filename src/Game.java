@@ -9,6 +9,7 @@ public class Game
     private Round round;
     private int pointPerRound;
     private Scanner input = new Scanner(System.in);
+    private ScoreCalculator scoreCalculator;
 
 
     public Game(int pointPerRound, Player[] players)
@@ -16,20 +17,18 @@ public class Game
         this.pointPerRound = pointPerRound;
         this.deck = new Deck();
         this.players = players;
+        this.scoreCalculator = new ScoreCalculator();
     }
 
     public void startGame()
     {
-        boolean gameWon = false;
-        for (Player player : players)
-        {
-            player.initializeHand(deck);  // Player is now responsible for its hand
-        }
+        dealHands();
+
         round = new Round(deck, players);
 
-
         // Game loop
-        while (!gameWon && deck.getCardCount() > players.length)
+        boolean gameWon = false;
+        while (!gameWon && deck.getCardCount() >= players.length)
         {
             round.playRound(input);  // Play a round
 
@@ -40,25 +39,20 @@ public class Game
         }
     }
 
+    private void dealHands() {
+        for (Player player : players)
+        {
+            Hand hand = new Hand();
+            for (int i = 0; i < 5; i++)
+            {
+                hand.add(deck.deal()); // Deal 5 cards to each player's hand
+            }
+            player.setHand(hand); // Assign the hand to the player
+        }
+    }
+
     public HashMap<Player, Double> calculateScores()
     {
-        ArrayList<Player> winningPlayers = round.getWinningPlayers();
-        HashMap<Player, Double> playerScores = new HashMap<>();
-
-        if (!winningPlayers.isEmpty())
-        {
-            double pointsPerWinner = (double) this.pointPerRound / winningPlayers.size();
-            for (Player player : players)
-            {
-                if (winningPlayers.contains(player))
-                {
-                    playerScores.put(player, pointsPerWinner);
-                } else
-                {
-                    playerScores.put(player, 0.0);
-                }
-            }
-        }
-        return playerScores;
+        return scoreCalculator.calculateScores(round.getWinningPlayers(), players, pointPerRound);
     }
 }

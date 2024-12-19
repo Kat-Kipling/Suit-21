@@ -8,27 +8,23 @@ public class Player {
     private final DisplayStrategy displayStrategy;
     private final ScoreCalculator scoreCalculator;
 
-
     public Player(String name, DisplayStrategy displayStrategy) {
         this.name = name;
         this.hand = new Hand();
         this.displayStrategy = displayStrategy;
-        this.suitScores = scoreHand();
         this.scoreCalculator = new ScoreCalculator();
+    }
+
+    public void setHand(Hand hand)
+    {
+        this.hand = hand;
+        this.suitScores = scoreCalculator.scoreHand(this.hand);
     }
 
     public void addCard(Card card) {
         this.hand.add(card);
     }
 
-    public void initializeHand(Deck deck)
-    {
-        for (int i = 0; i < 5; i++)
-        {
-            this.hand.add(deck.deal());
-        }
-        this.suitScores = scoreHand();
-    }
 
     public boolean exchange(Card cardToExchange, Card newCard)
     {

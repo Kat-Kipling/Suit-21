@@ -5,12 +5,14 @@ public class GameManager
     private int numberOfGames;
     private Player[] players;
     private HashMap<Player, Double> playerTotalScores;
+    private ScoreCalculator scoreCalculator;
 
     public GameManager(int numberOfGames, int numberOfPlayers, Player[] players)
     {
         this.numberOfGames = numberOfGames;
         this.players = players;
         this.playerTotalScores = new HashMap<>();
+        this.scoreCalculator = new ScoreCalculator();
     }
 
     public void launchGames()
@@ -21,9 +23,7 @@ public class GameManager
             System.out.println("Starting Game " + i);
             Game game = new Game(1, this.players); // Pass players to the game
             game.startGame();  // Start the current game
-
-            HashMap<Player, Double> gameScores = game.calculateScores();
-            updateTotalScores(gameScores);
+            updateTotalScores(game.calculateScores()); // After game is over, update scores for players
         }
 
         // After all games, print final scores and declare the winner

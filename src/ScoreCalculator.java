@@ -1,4 +1,6 @@
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
 
 public class ScoreCalculator
 {
@@ -50,5 +52,34 @@ public class ScoreCalculator
         }
 
         return scores;
+    }
+
+    public HashMap<Player, Double> calculateScores(ArrayList<Player> winningPlayers, Player[] allPlayers, int pointPerRound)
+    {
+        HashMap<Player, Double> playerScores = new HashMap<>();
+
+        if (!winningPlayers.isEmpty())
+        {
+            double pointsPerWinner = (double) pointPerRound / winningPlayers.size();
+            for (Player player : allPlayers)
+            {
+                if (winningPlayers.contains(player))
+                {
+                    playerScores.put(player, pointsPerWinner);
+                }
+                else
+                {
+                    playerScores.put(player, 0.0);
+                }
+            }
+        }
+        else
+        {
+            for (Player player : allPlayers)
+            {
+                playerScores.put(player, 0.0); // No winners, everyone gets 0 points
+            }
+        }
+        return playerScores;
     }
 }
