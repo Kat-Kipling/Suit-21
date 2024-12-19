@@ -6,6 +6,7 @@ public class GameManager
     private Player[] players;
     private HashMap<Player, Double> playerTotalScores;
     private ScoreCalculator scoreCalculator;
+    private ConsoleDisplayStrategy consoleDisplay;
 
     public GameManager(int numberOfGames, int numberOfPlayers, Player[] players)
     {
@@ -40,21 +41,6 @@ public class GameManager
 
     private void printFinalScores()
     {
-        System.out.println("Final Scores after " + numberOfGames + " games:");
-        for (Player player : players)
-        {
-            System.out.printf("%s: %.2f points%n", player.getName(), playerTotalScores.get(player));
-        }
-
-        // Determine the overall winner
-        // I seriously don't know what this part is doing, I asked ChatGPT for this part and it gave this monstrosity
-        double maxScore = playerTotalScores.values().stream().max(Double::compareTo).orElse(0.0);
-        for (Player player : players)
-        {
-            if (playerTotalScores.get(player) == maxScore)
-            {
-                System.out.println(player.getName() + " is the overall winner!");
-            }
-        }
+        consoleDisplay.printFinalScores(players, playerTotalScores, numberOfGames);
     }
 }
