@@ -1,49 +1,45 @@
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.Collections;
 import java.util.Stack;
+import java.util.ArrayList;
 
 public class Deck
 {
-    private Stack<Card> deck = new Stack<>();
-    private int cardCount;
+    private static final int NUM_CARDS_IN_DECK = 52;
+    private Stack<Card> deck;
 
     public Deck()
     {
         this.deck = newShuffledDeck();
-        this.cardCount = this.deck.size();
     }
 
     private Stack<Card> newShuffledDeck()
     {
         ArrayList<Card> tempArray = new ArrayList<>();
-        Random rand = new Random();
-        for (int i = 0; i < 52; i++) {
+        for (int i = 0; i < NUM_CARDS_IN_DECK; i++) {
             tempArray.add(new Card(
                     Suit.values()[(i / 13)],
                     Rank.values()[(i % 13)])
             );
         }
 
+        Collections.shuffle(tempArray); // Shuffle the cards using Collections.shuffle
         Stack<Card> tempStack = new Stack<>();
-        for(int i = 0; i < 52; i++)
-        {
-            Card tempCard = tempArray.get(rand.nextInt(tempArray.size()));
-            tempArray.remove(tempCard);
-            tempStack.push(tempCard);
-        }
+        tempStack.addAll(tempArray); // Add all shuffled cards to the stack
         return tempStack;
     }
 
     public Card deal()
     {
-        this.cardCount = this.deck.size();
-        return this.deck.pop();
+        if (deck.isEmpty()) {
+            throw new IllegalStateException("No cards left in the deck");
+        }
+        return deck.pop(); // Pop a card from the deck
     }
 
     public String toString()
     {
         StringBuilder deckString = new StringBuilder();
-        for(Card card : this.deck)
+        for (Card card : this.deck)
         {
             deckString.append(card).append("\n");
         }
@@ -51,6 +47,6 @@ public class Deck
     }
 
     public int getCardCount() {
-        return cardCount;
+        return deck.size(); // Use the stack's built-in size method
     }
 }
