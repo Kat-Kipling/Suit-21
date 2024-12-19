@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -25,31 +24,17 @@ public class Game
         dealHands();
 
         round = new Round(deck, players);
-
-        // Game loop
-        boolean gameWon = false;
-        while (!gameWon && deck.getCardCount() >= players.length)
-        {
-            round.playRound(input);  // Play a round
-
-            if (round.isRoundWon())
-            {
-                gameWon = true;
-            }
-        }
+        GameLoop gameLoop = new GameLoop(round, players, deck);
+        gameLoop.run();
     }
 
-    private void dealHands() {
-        for (Player player : players)
-        {
-            Hand hand = new Hand();
-            for (int i = 0; i < 5; i++)
-            {
-                hand.add(deck.deal()); // Deal 5 cards to each player's hand
-            }
-            player.setHand(hand); // Assign the hand to the player
-        }
+
+    private void dealHands()
+    {
+        HandDealer handDealer = new HandDealer(deck);
+        handDealer.dealHands(players);
     }
+
 
     public HashMap<Player, Double> calculateScores()
     {
