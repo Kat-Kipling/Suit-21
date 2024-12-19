@@ -15,6 +15,7 @@ public class HumanStrategy implements PlayerStrategy
         player.displayHand();
         System.out.println("Choose a card to play (enter index 1-5):");
         int index = input.nextInt() - 1;
+        input.nextLine(); // Clear buffer
         return player.getCard(index);
     }
 }

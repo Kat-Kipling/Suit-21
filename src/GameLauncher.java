@@ -19,11 +19,11 @@ public class GameLauncher
             String name = input.nextLine().trim();
 
             // Determine the strategy based on the name
-            PlayerStrategy strategy = name.equalsIgnoreCase("Computer")
+            PlayerStrategy playerStrategy = name.equalsIgnoreCase("Computer")
                     ? new ComputerStrategy()  // Assign AI strategy
                     : new HumanStrategy(input); // Assign human strategy
 
-            players[i] = new Player(name, strategy);
+            players[i] = new Player(name, consoleDisplay, playerStrategy);
         }
 
         // Prompt for the number of games to play

@@ -26,7 +26,6 @@ public class Round
         {
             Card cardToSwap = player.playCard();
             Card newCard = deck.deal();
-            input.nextLine(); // Clear input buffer
 
             if (player.exchange(cardToSwap, newCard))
             {
