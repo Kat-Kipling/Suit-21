@@ -6,6 +6,7 @@ public class Player {
     private Hand hand;
     private EnumMap<Suit, Integer> suitScores;
     private final DisplayStrategy displayStrategy;
+    private final PlayerStrategy strategy;
     private final ScoreCalculator scoreCalculator;
 
     public Player(String name, DisplayStrategy displayStrategy) {
@@ -14,6 +15,12 @@ public class Player {
         this.displayStrategy = displayStrategy;
         this.scoreCalculator = new ScoreCalculator();
     }
+
+    public Card playCard()
+    {
+        return strategy.chooseCardToPlay(this, this.hand);
+    }
+
 
     public void setHand(Hand hand)
     {
