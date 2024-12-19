@@ -22,6 +22,10 @@ public class Player {
         return playerStrategy.chooseCardToPlay(this, this.hand);
     }
 
+    public void setSuitScores(EnumMap<Suit, Integer> suitScores)
+    {
+        this.suitScores = suitScores;
+    }
 
     public void setHand(Hand hand)
     {
@@ -33,15 +37,9 @@ public class Player {
         this.hand.add(card);
     }
 
-
     public boolean exchange(Card cardToExchange, Card newCard)
     {
-        if (this.hand.exchange(cardToExchange, newCard))
-        {
-            this.suitScores = scoreHand();
-            return true;
-        }
-        else return false;
+        return this.playerStrategy.exchange(cardToExchange, newCard, this.hand,this);
     }
 
     public Card getCard(int index)

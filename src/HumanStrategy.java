@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class HumanStrategy implements PlayerStrategy
 {
-    private Scanner input;
+    private final Scanner input;
 
     public HumanStrategy(Scanner input)
     {
@@ -17,5 +17,16 @@ public class HumanStrategy implements PlayerStrategy
         int index = input.nextInt() - 1;
         input.nextLine(); // Clear buffer
         return player.getCard(index);
+    }
+
+    @Override
+    public boolean exchange(Card cardToExchange, Card newCard, Hand hand, Player player)
+    {
+        if (hand.exchange(cardToExchange, newCard))
+        {
+            player.setSuitScores(player.scoreHand());
+            return true;
+        }
+        else return false;
     }
 }
