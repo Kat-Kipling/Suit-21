@@ -15,9 +15,15 @@ public class GameLauncher
         Player[] players = new Player[numberOfPlayers];
         for (int i = 0; i < players.length; i++)
         {
-            System.out.printf("Player %d Name: ", i + 1);
-            String name = input.nextLine();
-            players[i] = new Player(name, consoleDisplay);
+            System.out.printf("Enter name for Player %d (type 'Computer' for an AI player): ", i + 1);
+            String name = input.nextLine().trim();
+
+            // Determine the strategy based on the name
+            PlayerStrategy playerStrategy = name.equalsIgnoreCase("Computer")
+                    ? new ComputerStrategy()  // Assign AI strategy
+                    : new HumanStrategy(input); // Assign human strategy
+
+            players[i] = new Player(name, consoleDisplay, playerStrategy);
         }
 
         // Prompt for the number of games to play

@@ -24,12 +24,8 @@ public class Round
         // Players take turns
         for (Player player : players)
         {
-            player.displayHand();
-
-            System.out.print("Choose a card to swap (1 - 5): ");
-            Card cardToSwap = player.getCard(input.nextInt() - 1);  // -1 for 0-based index
+            Card cardToSwap = player.playCard();
             Card newCard = deck.deal();
-            input.nextLine(); // Clear input buffer
 
             if (player.exchange(cardToSwap, newCard))
             {
