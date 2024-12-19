@@ -9,7 +9,7 @@ public class GameLauncher
         ConsoleDisplayStrategy consoleDisplay = new ConsoleDisplayStrategy();
 
         // Initialize helper classes
-        GameSetup gameSetup = new GameSetup(input);
+        GameSetup gameSetup = new GameSetup(consoleDisplay);
         PlayerFactory playerFactory = new PlayerFactory(input);
 
         // Prompt user for number of players

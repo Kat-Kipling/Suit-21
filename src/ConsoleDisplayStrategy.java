@@ -51,4 +51,19 @@ public class ConsoleDisplayStrategy implements DisplayStrategy
             }
         }
     }
+
+    public void promptForPlayerCount()
+    {
+        System.out.println("How many players (2 - 6)?");
+    }
+
+    public void showPlayerCountError()
+    {
+        System.out.println("Invalid number of players! Please enter a number between 2 and 6.");
+    }
+
+    public void promptForGameCount()
+    {
+        System.out.print("Enter number of games to play: ");
+    }
 }

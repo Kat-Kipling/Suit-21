@@ -2,11 +2,12 @@ import java.util.Scanner;
 
 public class GameSetup
 {
-    private Scanner input;
+    private final Scanner input = new Scanner(System.in);
+    private final DisplayStrategy displayStrategy;
 
-    public GameSetup(Scanner input)
+    public GameSetup(DisplayStrategy displayStrategy)
     {
-        this.input = input;
+        this.displayStrategy = displayStrategy;
     }
 
     public int getNumberOfPlayers()
@@ -14,12 +15,12 @@ public class GameSetup
         int numberOfPlayers = -1;
         while (numberOfPlayers < 2 || numberOfPlayers > 6)
         {
-            System.out.println("How many players (2 - 6)?");
+            displayStrategy.promptForPlayerCount();
             numberOfPlayers = input.nextInt();
             input.nextLine(); // Clear input buffer
             if (numberOfPlayers < 2 || numberOfPlayers > 6)
             {
-                System.out.println("Invalid number of players! Please enter a number between 2 and 6.");
+                displayStrategy.showPlayerCountError();
             }
         }
         return numberOfPlayers;
@@ -27,7 +28,7 @@ public class GameSetup
 
     public int getNumberOfGames()
     {
-        System.out.print("Enter number of games to play: ");
+        displayStrategy.promptForGameCount();
         return input.nextInt();
     }
 }
