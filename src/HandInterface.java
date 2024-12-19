@@ -13,4 +13,6 @@ public interface HandInterface
     public Card get(int index);
 
     public Card get(Card card);
+
+    Card getLowestValueCardInSuit(Suit targetSuit);
 }

@@ -1,8 +1,8 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.EnumMap;
 
 public class Hand implements HandInterface {
-
     private ArrayList<Card> hand;
 
     public Hand() {
@@ -24,6 +24,11 @@ public class Hand implements HandInterface {
         {
             return true;
         } else return false;
+    }
+
+    public ArrayList<Card> getHand()
+    {
+        return hand;
     }
 
     @Override
@@ -52,6 +57,14 @@ public class Hand implements HandInterface {
     @Override
     public Card get(Card card) {
         return null;
+    }
+
+    @Override
+    public Card getLowestValueCardInSuit(Suit targetSuit) {
+        return this.hand.stream()
+                .filter(card -> card.getSuit().equals(targetSuit))
+                .min(Comparator.comparingInt(card -> card.getRank().getValue()))
+                .orElse(null);
     }
 
     @Override
