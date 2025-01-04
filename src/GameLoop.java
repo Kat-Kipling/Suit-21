@@ -5,6 +5,11 @@ public class GameLoop
     private Round round;
     private Player[] players;
     private Deck deck;
+
+    public boolean isGameWon() {
+        return gameWon;
+    }
+
     private boolean gameWon = false;
 
     public GameLoop(Round round, Player[] players, Deck deck)

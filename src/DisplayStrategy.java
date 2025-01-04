@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 public interface DisplayStrategy
 {
     void displayHand(Player player);
@@ -7,4 +9,6 @@ public interface DisplayStrategy
     void showPlayerCountError();
 
     void promptForGameCount();
+
+    void printFinalScores(Player[] players, HashMap<Player, Double> playerTotalScores, int numberOfGames);
 }

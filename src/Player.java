@@ -2,7 +2,6 @@ import java.util.EnumMap;
 
 public class Player {
     private final String name;
-    private double score;
     private Hand hand;
     private EnumMap<Suit, Integer> suitScores;
     private final DisplayStrategy displayStrategy;
@@ -83,11 +82,6 @@ public class Player {
     public void displayHand()
     {
         displayStrategy.displayHand(this);
-    }
-
-    public void addPoints(double points)
-    {
-        this.score += points;
     }
 
     public void updateScores()

@@ -43,6 +43,11 @@ public class Hand implements HandInterface {
         return false;
     }
 
+    public boolean isEmpty()
+    {
+        return this.hand.isEmpty();
+    }
+
     @Override
     public void clear()
     {
