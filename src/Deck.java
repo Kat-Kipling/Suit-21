@@ -5,6 +5,11 @@ import java.util.ArrayList;
 public class Deck
 {
     private static final int NUM_CARDS_IN_DECK = 52;
+
+    public Stack<Card> getDeck() {
+        return deck;
+    }
+
     private Stack<Card> deck;
 
     public Deck()
