@@ -2,18 +2,33 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
+import java.util.HashMap;
+import java.util.Scanner;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ScoreCalculatorTest {
     private ScoreCalculator calculator;
     private Hand hand;
+    private DisplayStrategy displayStrategy;
+    private PlayerStrategy playerStrategy;
+    private Player player1;
+    private Player player2;
+    private Player player3;
+    private Player[] allPlayers;
 
     @BeforeEach
     void setUp() {
         calculator = new ScoreCalculator();
+        displayStrategy = new ConsoleDisplayStrategy();
+        playerStrategy = new HumanStrategy(new Scanner(System.in));
         hand = new Hand();
+        player1 = new Player("test1", displayStrategy, playerStrategy);
+        player2 = new Player("test2", displayStrategy, playerStrategy);
+        player3 = new Player("test3", displayStrategy, playerStrategy);
+        allPlayers = new Player[]{player1, player2, player3};
     }
 
     @Test
@@ -120,5 +135,55 @@ class ScoreCalculatorTest {
         EnumMap<Suit, Integer> scores = calculator.scoreHand(hand);
         assertEquals(20, scores.get(Suit.HEARTS));  // ACE (11) + NINE (9) = 20
         assertEquals(19, scores.get(Suit.SPADES));  // ACE (11) + EIGHT (8) = 19
+    }
+
+    @Test
+    void testCalculateScoresOneWinner() {
+        ArrayList<Player> winningPlayers = new ArrayList<>();
+        winningPlayers.add(player1);
+
+        HashMap<Player, Double> scores = calculator.calculateScores(winningPlayers, allPlayers, 1);
+
+        assertEquals(1.0, scores.get(player1), 0.001, "Winner should receive 1 point");
+        assertEquals(0.0, scores.get(player2), 0.001, "Non-winner should receive 0 points");
+        assertEquals(0.0, scores.get(player3), 0.001, "Non-winner should receive 0 points");
+    }
+
+    @Test
+    void testCalculateScoresTwoWinners() {
+        ArrayList<Player> winningPlayers = new ArrayList<>();
+        winningPlayers.add(player1);
+        winningPlayers.add(player2);
+
+        HashMap<Player, Double> scores = calculator.calculateScores(winningPlayers, allPlayers, 1);
+
+        assertEquals(0.5, scores.get(player1), 0.001, "Winner should receive 0.5 points");
+        assertEquals(0.5, scores.get(player2), 0.001, "Winner should receive 0.5 points");
+        assertEquals(0.0, scores.get(player3), 0.001, "Non-winner should receive 0 points");
+    }
+
+    @Test
+    void testCalculateScoresThreeWinners() {
+        ArrayList<Player> winningPlayers = new ArrayList<>();
+        winningPlayers.add(player1);
+        winningPlayers.add(player2);
+        winningPlayers.add(player3);
+
+        HashMap<Player, Double> scores = calculator.calculateScores(winningPlayers, allPlayers, 1);
+
+        assertEquals(0.333, scores.get(player1), 0.001, "Winner should receive approximately 0.33 points");
+        assertEquals(0.333, scores.get(player2), 0.001, "Winner should receive approximately 0.33 points");
+        assertEquals(0.333, scores.get(player3), 0.001, "Winner should receive approximately 0.33 points");
+    }
+
+    @Test
+    void testCalculateScoresNoWinners() {
+        ArrayList<Player> winningPlayers = new ArrayList<>();
+
+        HashMap<Player, Double> scores = calculator.calculateScores(winningPlayers, allPlayers, 1);
+
+        assertEquals(0.0, scores.get(player1), 0.001, "Player should receive 0 points when there are no winners");
+        assertEquals(0.0, scores.get(player2), 0.001, "Player should receive 0 points when there are no winners");
+        assertEquals(0.0, scores.get(player3), 0.001, "Player should receive 0 points when there are no winners");
     }
 }
